@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="code.js" defer></script>
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"
+        integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.css" rel="stylesheet" />
+
+
+</head>
+
+<body x-data="PhoneBill">
+    <div class="container">
+        <br>
+        <div class="row">
+            <br>
+            <hr>
+            <h3 class="card-title">TOTAL PHONE BlLL</h3>
+            <hr>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        
+                        <h3 class="card-title">Add plan</h3>
+                        <hr>
+                        <form x-on:submit.prevent="plan_name, call_price, sms_price">
+                            <label>Plan name </label>
+                            <input class="form-control" type="text" x-model="plan_name" placeholder="enter plan name "
+                                required /><br>
+
+
+                            <label>SMS Price </label>
+                            <input class="form-control" type="number" x-model="sms_price" placeholder="ente sms price"
+                                required /><br>
+
+                            <label>CALL Price</label>
+                            <input class="form-control" type="number" x-model="call_price"
+                                placeholder="enter call price" required /><br>
+                            <input class="form-control" type="number" x-model="ed_id" x-show="hideForever" />
+<!-- 
+                            <button type="submit" class="btn btn-primary" @click="ccPlan" x-show="!hide">Add
+                                Plan</button> -->
+                                <button class="btn btn-primary"
+                                @click="(ccPlan), (user_plan_name = plan_name), (user_sms_price = sms_price), (user_call_price = call_price)"
+                                x-show="!hide">Add Plan</button>
+
+                            <button class="btn btn-secondary" @click="(updatePlan(ed_id)), (hide=!hide) "
+                                x-show="hide">done</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        
+                            <h3 class="card-title">Calclate Bill</h3>
+                            <hr>
+                            <div>
+                                <span>Bill: </span><span x-text="total"></span><br>
+                                <span>Plan: </span><span x-text="plan_name_bll"></span><br>
+                                <span>Action: </span><span x-text="actions"></span>
+                            </div><br>
+
+
+                            <input class="form-control" type="text" x-model="selectedName"
+                                placeholder="enter a plan name" /> <br>
+
+                            <input class="form-control" type="text" x-model="action_entered" placeholder="enter bill" />
+                            <br>
+
+                            <button class="btn btn-primary" x-show="hidePlan" @click="(phoneBill), (actions = action_entered), (plan_name_bll = selectedName ), (setTimeout(() => {
+                                
+                                selectedName = '';
+                                action_entered= '';
+                              }, 3000))">Done</button>
+
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+<br>
+<hr>
+<br>
+
+        <table class="table table-hover text-center">
+            <thead>
+                <tr>
+                    <th>
+                        PLAN
+                    </th>
+                    <th>
+                        SMS
+                    </th>
+                    <th>
+                        CALL
+                    </th>
+
+                    <th>
+                        ACTION
+                    </th>
+
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <template x-for="x in plans">
+                    <tr>
+                        <td x-text="x.plan_name"></td>
+                        <td x-text="x.sms_price"></td>
+                        <td x-text="x.call_price"></td>
+
+                        <td>
+                            <button class="btn"
+                                @click="(plan_name=x.plan_name),(sms_price=x.sms_price), (call_price = x.call_price),(ed_id=x.id),(hide=true)">
+                                <i class="fas fa-pen-to-square"></i>
+                                <!-- edit -->
+                            </button>
+
+                            <button class="btn" x-on:click="deletePlan(x.id)">
+
+                                <i class="fas fa-trash-can"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </template>
+
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>

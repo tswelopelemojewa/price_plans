@@ -1,0 +1,45 @@
+
+GET http://localhost:4012/api/price_plans/
+
+###
+
+post http://localhost:4012/api/price_plan/create
+Content-Type: application/json
+
+{
+    "plan_name": "zaka2",
+    "sms_price": 2,
+    "call_price": 3.2
+}
+
+###
+POST http://localhost:4012/api/price_plan/delete
+Content-Type: application/json
+
+{
+    "id": 5
+}
+
+###
+POST http://localhost:4012/api/price_plan/update
+Content-Type: application/json
+
+{
+    "plan_name": "neji",
+    "sms_price": 1.4,
+    "call_price": 3.2,
+    "id": 6
+}
+
+
+###
+
+POST  http://localhost:4012/api/price_plan/phonebill
+Content-Type: application/json
+
+{
+
+    "plan_name": "zaka2",
+    "actions": "sms, sms, sms, call"
+    
+}
